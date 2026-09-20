@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Node (falls später Abhängigkeiten dazukommen)
+node_modules/
+
+# Lokal: merkt sich den Pfad der md-Quelle (rechnerspezifisch, wird von sync.mjs angelegt)
+data/.source
+
+# Temporäre Testseiten
+_t.html
+_p.html
+_probe.html

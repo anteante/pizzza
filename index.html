@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pizzateig</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Condensed:wght@300;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Pizzateig</h1>
+  </header>
+
+  <section id="setup" aria-labelledby="h-setup">
+    <h2 id="h-setup">Ansatz</h2>
+    <div class="rows">
+      <div class="row">
+        <label class="mono" for="method">Methode</label>
+        <div><select id="method"></select></div>
+      </div>
+      <div class="row">
+        <label class="mono" for="flour">Mehl in g</label>
+        <div><input id="flour" type="number" inputmode="decimal" min="50" step="50"></div>
+      </div>
+      <div class="row">
+        <label class="mono" for="hydration">Hydration in %</label>
+        <div><input id="hydration" type="number" inputmode="decimal" min="50" max="90" step="1"> <span class="muted" id="hydration-hint"></span></div>
+      </div>
+      <div class="row">
+        <span class="mono" id="yeast-label">Hefe</span>
+        <div class="seg" role="radiogroup" aria-labelledby="yeast-label">
+          <label><input type="radio" name="yeast" value="dry"><span>Trockenhefe</span></label>
+          <label><input type="radio" name="yeast" value="fresh"><span>Frischhefe</span></label>
+        </div>
+      </div>
+      <div class="row" id="bass-row" hidden>
+        <label class="mono" for="bass">Variante</label>
+        <div><label class="check"><input id="bass" type="checkbox"> <span id="bass-name"></span></label> <span class="muted" id="bass-hint"></span></div>
+      </div>
+    </div>
+    <p class="mono note" id="balls-note"></p>
+  </section>
+
+  <section id="ingredients" aria-labelledby="h-ing">
+    <h2 id="h-ing">Zutaten</h2>
+    <div class="rows" id="ing-rows"></div>
+    <p class="mono note" id="ing-note"></p>
+  </section>
+
+  <section id="steps" aria-labelledby="h-steps">
+    <h2 id="h-steps">Anleitung</h2>
+    <p class="mono" id="steps-lead"></p>
+    <ol class="steps" id="steps-list"></ol>
+    <div id="steps-notes"></div>
+  </section>
+
+  <section id="plan" aria-labelledby="h-plan">
+    <h2 id="h-plan">Zeitplan</h2>
+    <div class="rows">
+      <div class="row">
+        <label class="mono" for="start-day">Start</label>
+        <div class="when"><select id="start-day"></select><input id="start-time" type="time" step="900" aria-label="Startzeit"></div>
+      </div>
+      <div class="row">
+        <label class="mono" for="oven-day">Pizza in den Ofen</label>
+        <div class="when"><select id="oven-day"></select><input id="oven-time" type="time" step="900" aria-label="Uhrzeit Ofen"></div>
+      </div>
+      <div class="row">
+        <label class="mono" for="temp">Raumtemperatur</label>
+        <div><select id="temp"></select> <span class="muted" id="temp-hint"></span></div>
+      </div>
+    </div>
+    <p class="mono note error" id="plan-warn" role="status"></p>
+    <div id="plan-list"></div>
+  </section>
+
+  <section id="notes" aria-labelledby="h-notes">
+    <h2 id="h-notes">Notizen</h2>
+    <div id="notes-list"></div>
+  </section>
+
+  <section id="source" aria-label="pizzateig.md">
+    <p>
+      <button class="link mono" id="import-btn" type="button">pizzateig.md laden</button>
+      <button class="link mono" id="reset-btn" type="button" hidden>Eingebettete Version verwenden</button>
+      <input id="import-file" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>
+    </p>
+    <p class="mono error" id="import-error" role="alert"></p>
+  </section>
+</div>
+
+<script src="src/parser.js"></script>
+<script src="src/planner.js"></script>
+<script src="data/pizzateig.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

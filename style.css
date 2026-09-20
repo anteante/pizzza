@@ -1,0 +1,197 @@
+/* Umsetzung von _ref/stilvorgabe-webapps.md. Abweichungen sind in _ref/stilvorgabe-feedback.md begründet.
+
+   Typografie: drei Größen, drei Schnitte, sonst nichts.
+     Mono         400, Versalien, 0.05rem, --fs-sml (max 14px)   Labels und Mengenangaben (.mono / .label)
+     Fließtext    300, --fs-med (max 26.5px)   alles andere
+     h1, h2       500, --fs-max
+*/
+
+:root {
+  --bg: #F0F0F0;
+  --surface: #F0F0F0;
+  --text: #333;
+  --line: #DDD;
+  --accent: #234297;
+
+  --ff-base: 'IBM Plex Sans Condensed', 'Arial Narrow', sans-serif;
+  --ff-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Achtung: html { font-size: 62.5% } weiter unten, 1rem = 10px */
+  --fs-sml: clamp(0.9rem, 0.72rem + 1vw, 1.4rem);
+  --fs-med: clamp(1.7rem, 1.25rem + 2vw, 2.65rem);
+  --fs-max: clamp(2rem, 2.5rem + 2vw, 4rem);
+  --lh-body: 1.4;
+  --lh-head: 1.2;
+
+  --s1: 12px; --s2: 24px; --s4: 48px; --s8: 96px; --s16: 192px;
+  --radius: 4px;
+  --t: 0.2s;
+
+  /* Abweichung: in der Vorgabe nicht definiert */
+  --on-accent: #FFF;
+  --field: #FFF;
+  --error: #9B2C2C;
+  --section-gap: var(--s8);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1A1A; --surface: #1A1A1A; --text: #D6D6D6;
+    --line: #333; --accent: #8FA4E6;
+    --on-accent: #1A1A1A; --field: #242424; --error: #D98A8A;
+  }
+}
+@media (max-width: 600px) {
+  :root { --section-gap: var(--s4); }
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); font-size: 62.5%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-base);
+  font-size: var(--fs-med);
+  font-weight: 300;
+  line-height: var(--lh-body);
+  -webkit-text-size-adjust: 100%;
+}
+::selection { background: var(--accent); color: var(--on-accent); }
+
+/* Die eine Mono-Schrift */
+.mono, .label {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-sml);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+.label { margin: 0 0 var(--s1); color: var(--text); }
+
+/* Die einzige Ausnahme im Fließtext */
+h1, h2 {
+  margin: 0 0 var(--s1);
+  font-size: var(--fs-max);
+  font-weight: 500;
+  line-height: var(--lh-head);
+  letter-spacing: -0.02em;
+}
+
+.page { max-width: 1000px; margin: 0 auto; padding: var(--s8) var(--s2) var(--s16); }
+.page > * { max-width: 720px; }
+@media (max-width: 600px) { .page { padding-top: var(--s4); padding-bottom: var(--s8); } }
+section { margin-top: var(--section-gap); }
+
+p { margin: 0 0 var(--s1); max-width: 66ch; }
+strong, em, b, i { font-weight: inherit; font-style: inherit; }
+code { font: inherit; }
+.error { color: var(--error); }
+.error:empty { display: none; }
+
+/* Zusätze unter Tabellen und Listen: Mono, eine Zeilenhöhe Abstand nach oben */
+.note { margin: calc(var(--fs-med) * var(--lh-body)) 0 0; }
+.note:empty { display: none; }
+
+a, button.link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+button.link { background: none; border: 0; padding: 0; text-align: left; margin-right: var(--s2); font: inherit; cursor: pointer; }
+button.link.mono { font-family: var(--ff-mono); font-size: var(--fs-sml); font-weight: 400; }
+button.link:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Listen und Tabellen: Label 25 %, Wert Rest */
+.rows { border-bottom: 1px solid var(--line); }
+.row, .ing, .steps li, .prow {
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  align-items: baseline;
+  gap: var(--s1);
+  padding: var(--s2) 0 var(--s1);
+  border-top: 1px solid var(--line);
+}
+.row { padding: var(--s1) 0; }
+.row[hidden] { display: none; }
+/* Wertspalte: Felder und Hinweise vertikal mittig, jede Feldzeile gleich hoch */
+.row > div { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); min-height: 48px; }
+.row p { margin: 0; }
+.row > div > p { flex-basis: 100%; }
+.row > div > span:empty { display: none; }
+.row { align-items: start; }
+.row > :first-child { display: flex; align-items: center; min-height: 48px; }
+/* Handy: Label über dem Feld, ohne Extra-Höhe und Abstand */
+@media (max-width: 600px) {
+  .row { grid-template-columns: 1fr; gap: 0; }
+  .row > :first-child { min-height: 0; align-items: flex-start; padding-bottom: 0; }
+  /* Felder sitzen mit der Rahmenkante höher als Text in der 48-px-Zeile, deshalb etwas Abstand zum Label */
+  .row > div:has(> input:not([type="radio"]):not([type="checkbox"]), > select) { margin-top: var(--s1); }
+}
+
+
+input, select {
+  height: 48px;
+  padding: 0 var(--s1);
+  background: var(--field);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font: inherit;
+  line-height: 1;
+}
+input[type="number"] { width: 9ch; min-width: 140px; }
+input[type="time"] { width: 9ch; min-width: 160px; }
+.when select { width: auto; min-width: 220px; }
+select {
+  width: 100%; max-width: 100%;
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23333' stroke-width='1.5'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+input:disabled { color: var(--text); -webkit-text-fill-color: var(--text); opacity: 1; }
+input:focus, select:focus { border-color: var(--accent); }
+input:focus:not(:focus-visible), select:focus:not(:focus-visible) { outline: none; }
+input[type="range"] { margin: 0; width: min(360px, 100%); height: 48px; padding: 0; border: 0; background: none; accent-color: var(--accent); vertical-align: middle; }
+input[type="checkbox"], input[type="radio"] { height: auto; accent-color: var(--accent); }
+input[type="checkbox"] { width: 0.8em; height: 0.8em; vertical-align: -0.05em; }
+.check { cursor: pointer; }
+
+/* Umschalter: aktive Option in Textfarbe, die andere als Link */
+.seg { display: flex; gap: var(--s2); }
+.seg label { cursor: pointer; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg span { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
+.seg input:checked + span { color: var(--text); text-decoration: none; }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Zutaten: Menge | Name | Anteil */
+.ing { grid-template-columns: 25% 1fr auto; }
+@media (max-width: 600px) { .ing { grid-template-columns: 30% 1fr auto; } }
+
+/* Anleitung */
+.steps { margin: var(--s2) 0 0; padding: 0; list-style: none; counter-reset: s; border-bottom: 1px solid var(--line); }
+.steps li { counter-increment: s; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: inherit; font-family: var(--ff-mono); font-size: var(--fs-sml); font-weight: 400; letter-spacing: 0.05rem; color: var(--text); }
+@media (max-width: 600px) { .steps li { grid-template-columns: 15% 1fr; } }
+
+/* Zeitplan */
+#plan-summary, #plan-list { margin-top: var(--s2); }
+.day { margin: var(--s4) 0 var(--s1); }
+.day:first-child { margin-top: 0; }
+.prow .detail { margin: 0; color: var(--text); }
+.prow .mono:last-child { margin: 4px 0 0; }
+@media (max-width: 600px) { .prow { grid-template-columns: 20% 1fr; } }
+
+/* Notizen */
+details { border-top: 1px solid var(--line); padding: var(--s1) 0; }
+#notes-list details:last-child { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; }
+details > summary + * { margin-top: calc(var(--fs-med) * var(--lh-body)); }
+details ul, details ol { max-width: 66ch; margin-bottom: var(--s1); padding-left: var(--s2); }
+details li { margin-bottom: 6px; }
+
+#steps-lead:empty { display: none; }
