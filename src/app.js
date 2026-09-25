@@ -117,8 +117,7 @@
     $('#method').value = m.id;
     setVal($('#flour'), Math.round(state.flour * 10) / 10);
     const n = Math.max(1, Math.round((state.flour / baseFlour(m)) * m.yield.count));
-    const unit = m.yield.unit === 'Kugeln' ? 'Ballen' : m.yield.unit;
-    $('#balls-note').textContent = `${n} ${unit} je ${de(c.dough / n)} g Teig${m.yield.assumed ? ' (Anzahl angenommen)' : ''}`;
+    $('#balls-note').textContent = `${n} ${m.yield.unit} je ${de(c.dough / n)} g Teig${m.yield.assumed ? ' (Anzahl angenommen)' : ''}`;
 
     const h = hyd(m);
     const w = ing(m, 'water');
@@ -170,13 +169,13 @@
   // „Mit 600g Wasser starten … (bei 65%: 50g, bei 67%: 70g)“: Rest für die aktuelle Hydration ergänzen
   function withBassinage(text, m, c) {
     const start = text.match(new RegExp(`(${NUM})\\s*g\\s+Wasser\\s+starten`, 'i'));
-    const list = text.match(new RegExp(`\\((bei\\s+${NUM}\\s*%:\\s*${NUM}\\s*g(?:,\\s*)?)+\\)`, 'i'));
+    const list = text.match(new RegExp(`\\(((?:bei\\s+${NUM}\\s*%:\\s*${NUM}\\s*g(?:,\\s*)?)+)(?:\\s*etc\\.?)?\\)`, 'i'));
     if (!start || !list) return { text, extra: '' };
     const h = hyd(m);
     const listed = [...list[0].matchAll(new RegExp(`bei\\s+(${NUM})\\s*%`, 'gi'))].map((x) => P.toNum(x[1]));
     if (listed.includes(h)) return { text, extra: '' };
     const rest = Math.max(0, (state.flour * h) / 100 - P.toNum(start[1]) * c.f);
-    const at = list.index + list[0].length - 1;
+    const at = list.index + 1 + list[1].trimEnd().length; // nach dem letzten Wert, vor „etc.“ und „)“
     return { text: text.slice(0, at) + BASS + text.slice(at), extra: `, bei ${de(h, 1)}%: ${grams(rest)}g` };
   }
 
@@ -185,7 +184,7 @@
     const count = Math.max(1, Math.round(c.f * m.yield.count));
     return plain(b.text)
       .replace(GRAMS, (all, x, y) => `${grams(P.toNum(x) * c.f)}${y ? `–${grams(P.toNum(y) * c.f)}` : ''}g`)
-      .replace(/(In\s+)(\d+)(\s+(?:Kugeln|Portionen|Stücke|Ballen))/i, (all, pre, n, post) => (+n === m.yield.count ? `${pre}${count}${post}` : all))
+      .replace(/(In\s+)(\d+)(\s+(?:Kugeln|Portionen|Stücke?|Ballen)\b)/i, (all, pre, n, post) => (+n === m.yield.count ? `${pre}${count}${post}` : all))
       .replace(BASS, b.extra);
   }
 

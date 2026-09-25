@@ -303,7 +303,7 @@
           variant = { name: info.variant.name, title: info.variant.title, threshold: info.variant.threshold, steps: makeSteps([...own, ...tail], { warnings: [], estimated: [] }) };
         }
         const text = info.steps.join(' ');
-        const y = text.match(/In\s+(\d+)\s+(Kugeln|Portionen|Stücke|Ballen)/i);
+        const y = text.match(/In\s+(\d+)\s+(Kugeln|Portionen|Stücke?|Ballen)\b/i);
         groupMethods.push({
           id: slug(src.name), name: src.name, family: group.title, ingredients, steps: baseSteps, variant,
           notes: info.notes.filter((n) => n !== 'Rest identisch'),

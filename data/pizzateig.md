@@ -18,12 +18,12 @@ tags:
 
 - 1000g Mehl (Tipo 00)
 - 650g kaltes Wasser (65%)
-- 3g frische Hefe oder 1g Trockenhefe
+- 3g frische Hefe oder 1g Trockenhefe (3:1)
 - 20g Salz
 
 ### Methode 1 – 24h
 
-Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage eingearbeitet (bei 65%: 50g, bei 67%: 70g).
+Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage eingearbeitet (bei 65%: 50g, bei 67%: 70g etc.).
 
 - Frischhefe in den 600g Wasser auflösen, Trockenhefe unter das Mehl mischen
 - Wasser und Mehl verbinden, 30 Min ruhen (Fermentolyse)
@@ -31,28 +31,26 @@ Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassi
 - Kneten, bis sich das Gluten bildet, dann das Salzwasser in 2–3 Portionen einarbeiten
 - 10–15 Min kneten bis glatt
 - 1h Raumtemperatur abgedeckt
-- In 6 Kugeln teilen
+- In 6 Stück teilen, Ballen schleifen
 - 18–24h Kühlschrank
-- 2–3h vor Backen Raumtemperatur
+- 2–3h vor Backen bei Raumtemperatur gehen lassen
 
 ### Methode 2 – Same Day
 
-8–10h, komplett bei Raumtemperatur (20–22°C). Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h.
+8–10h, komplett bei Raumtemperatur (20–22°C). Hefemenge ggf. anpassen (2g Trockenhefe oder 6g Frischhefe für 8 Stunden, 1,5g oder 4,5g für 10 Stunden etc.)
 
-- Kneten wie Methode 1, Wassertemperatur so wählen, dass der Teig nach dem Kneten 23–24°C hat
+- Kneten wie Methode 1, Teig sollte nach dem Kneten nicht mehr als 25°C haben (kaltes Wasser!)
 - 2h Stockgare bei Raumtemperatur, abgedeckt
-- In 6 Kugeln teilen, straff schleifen
+- In 6 Stück teilen, Ballen schleifen
 - 5–7h Stückgare bei Raumtemperatur
 - Sind die Ballen vor dem Backen fertig: Kühlschrank, 30–45 Min vor dem Backen wieder raus
-
-*Kritisch: Teigtemperatur. Ohne Kühlschrank als Puffer bestimmt sie das ganze Timing; 2°C Abweichung verschieben die Reife um über eine Stunde.*
 
 ### Methode 3 – Biga
 
 1. Biga: 1000g Mehl + Hefe + 500 g Wasser grob vermischen
 2. Biga in einem luftdichten Gefäß über Nacht im Kühlschrank fermentieren (12-18h)
 3. Mit 150-200g Wasser (entspricht 65–70% Hydrierung) und 20 g Salz auskneten. 
-4. 1 Stunde Stockgare bei Raumtemperatur, dann Ballen schleifen, nochmals für 4–6 Stunden gehen lassen.
+4. 1 Stunde Stockgare bei Raumtemperatur, dann in 6 Stück teilen, Ballen schleifen, nochmals für 4–6 Stunden gehen lassen.
 
 ## Römisch – Tonda
 
@@ -67,7 +65,7 @@ Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassi
 3. Gegen Ende, bevor sich der Teig ganz bindet, Salz und Olivenöl einarbeiten
 4. Etwas 10 Minuten kneten
 5. 1 Stunde Stockgare
-6. In 8 Portionen teilen, Ballen schleifen
+6. In 8 Stück teilen, Ballen schleifen
 7. 18-24 Stunden im Kühlschrank fermentieren
 8. 2-3 Stunden vor dem Backen bei Raumtemperatur gehen lassen (je nach Außentemperatur auch 4-5 Stunden)
 
@@ -80,7 +78,7 @@ Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassi
 - 30g Olivenöl
 - ca. 20g Olivenöl pro Blech
 
-*Ergibt 2 Bleche 30×40. Pizzeria/Nuvola (W <300) halten 80% nicht.*
+*Ergibt 2 Bleche 30×40.*
 
 1. Hefe in 700 g Wasser auflösen, mit Mehl mischen, 30 Min Fermentolyse
 2. Kneten bis Gluten sich bildet
@@ -88,13 +86,13 @@ Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassi
 4. Olivenöl zuletzt einarbeiten
 5. 3× Dehnen und Falten alle 30 Min
 6. 24–48h Kühlschrank
-7. In 2 Stücke teilen, locker vorformen, 3–4h Raumtemperatur
+7. In 2 Stück teilen, locker vorformen, 3–4h Raumtemperatur
 8. Im geölten Blech mit Fingerspitzen ausziehen
 9. Backstahl unterste Schiene, 45 Min auf Maximum vorheizen, Blech direkt darauf
 10. 8–10 Min nur mit Tomate vorbacken, dann belegen, 6–10 Min fertigbacken
 11. Sofort auf Gitter
 
-*Kritisch: Vorbacken. Direkt voll belegt wird der Boden weich.*
+*Vorbacken. Direkt voll belegt wird der Boden weich.*
 
 ---
 
@@ -121,7 +119,6 @@ Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassi
 
 ## Timing & Temperatur
 
-- Faustregel Gesamtgare bei Raumtemperatur: 3g Trockenhefe/kg + 25°C = 4–5h gesamt. Bei 22°C eher 6h.
 - **Optik schlägt Uhr:** 50–70% Volumenzunahme, gewölbte glatte Oberfläche, gibt auf leichten Fingerdruck langsam nach.
 - Übergare-Zeichen: flach statt gewölbt, blasig-feuchte Oberfläche, deutlich alkoholischer Geruch.
 - Ballen aus dem Kühlschrank brauchen bei 0,1% Trockenhefe 2–3h.
