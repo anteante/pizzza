@@ -11,7 +11,7 @@ node sync.mjs /pfad/zum/blog/pizzateig.md   # einmalig: Quelle merken, kopieren,
 node sync.mjs                               # danach: erneut aus derselben Quelle
 ```
 
-Alternativ im Browser über „pizzateig.md laden“ oder per Drag & Drop. Das gilt nur für diesen Browser und lässt sich zurücksetzen.
+Alternativ die md per Drag & Drop auf die Seite ziehen. Das gilt nur für diesen Browser und lässt sich zurücksetzen.
 
 Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter „Quelle“ im Erkennungsprotokoll und in der Ausgabe von `sync.mjs`.
 

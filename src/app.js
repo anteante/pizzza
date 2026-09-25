@@ -315,8 +315,6 @@
     $('#oven-day').addEventListener('change', (e) => { state.ovenDay = +e.target.value; update(); });
     $('#oven-time').addEventListener('input', (e) => { if (e.target.value) { state.ovenTime = e.target.value; update(); } });
 
-    $('#import-btn').addEventListener('click', () => $('#import-file').click());
-    $('#import-file').addEventListener('change', (e) => { const f = e.target.files[0]; if (f) importFile(f); e.target.value = ''; });
     $('#reset-btn').addEventListener('click', () => { store.del('pizza.md'); reload(); });
     window.addEventListener('dragover', (e) => e.preventDefault());
     window.addEventListener('drop', (e) => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) importFile(f); });
