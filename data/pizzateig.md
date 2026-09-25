@@ -1,7 +1,7 @@
 ---
 layout: layouts/post.njk
 title: Pizzateig
-date: 2026-10-19
+date: 2026-09-25
 tags: 
 - post 
 - bread
@@ -10,7 +10,11 @@ tags:
 
 ## Neapolitanisch
 
-### 24h Pizzateig
+### Pizzateig-Rechner
+
+[pizzzas.netlify.app](https://pizzzas.netlify.app/)
+
+### Basisrezept
 
 - 1000g Mehl (Tipo 00)
 - 650g kaltes Wasser (65%)
@@ -19,24 +23,31 @@ tags:
 
 ### Methode 1 – 24h
 
-Gilt für Frisch- und Trockenhefe gleichermaßen.
+Immer mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage eingearbeitet (bei 65%: 50g, bei 67%: 70g).
 
-- Hefe in 650g Wasser vollständig auflösen
-- Mit 1000g Mehl mischen, 30 Min ruhen (Fermentolyse)
-- Salz gegen Ende zugeben
-- 10-15 Min kneten bis glatt
-- In geölter Dose 1h Raumtemperatur, dann 18-24h Kühlschrank (Stockgare)
-- 4-6h vor Backen direkt aus dem Kühlschrank in 6 Ballen teilen und schleifen, ohne Mehl
-- Stückgare abgedeckt bei Raumtemperatur: bei 21–22°C ca. 5–6h, warme Küche ca. 4h
-
-**Ab 67% Hydration (z.B. Nuvola): Bassinage**
-
-- Mit ca. 600g Wasser starten, Rest bis zur Ziel-Hydration zurückhalten (mind. 60g), Salz darin auflösen
-- Hefe im Startwasser auflösen, mit Mehl mischen, 30 Min Fermentolyse
+- Frischhefe in den 600g Wasser auflösen, Trockenhefe unter das Mehl mischen
+- Wasser und Mehl verbinden, 30 Min ruhen (Fermentolyse)
+- Salz im zurückgehaltenen Wasser auflösen
 - Kneten, bis sich das Gluten bildet, dann das Salzwasser in 2–3 Portionen einarbeiten
-- Rest identisch
+- 10–15 Min kneten bis glatt
+- 1h Raumtemperatur abgedeckt
+- In 6 Kugeln teilen
+- 18–24h Kühlschrank
+- 2–3h vor Backen Raumtemperatur
 
-### Methode 2 – Biga
+### Methode 2 – Same Day
+
+8–10h, komplett bei Raumtemperatur (20–22°C). Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h.
+
+- Kneten wie Methode 1, Wassertemperatur so wählen, dass der Teig nach dem Kneten 23–24°C hat
+- 2h Stockgare bei Raumtemperatur, abgedeckt
+- In 6 Kugeln teilen, straff schleifen
+- 5–7h Stückgare bei Raumtemperatur
+- Sind die Ballen vor dem Backen fertig: Kühlschrank, 30–45 Min vor dem Backen wieder raus
+
+*Kritisch: Teigtemperatur. Ohne Kühlschrank als Puffer bestimmt sie das ganze Timing; 2°C Abweichung verschieben die Reife um über eine Stunde.*
+
+### Methode 3 – Biga
 
 1. Biga: 1000g Mehl + Hefe + 500 g Wasser grob vermischen
 2. Biga in einem luftdichten Gefäß über Nacht im Kühlschrank fermentieren (12-18h)

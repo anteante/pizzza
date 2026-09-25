@@ -2,6 +2,8 @@
 
 Stand: erster Durchlauf. Alles, was beim Umsetzen unklar war, fehlte oder angepasst werden musste.
 
+**Eingearbeitet:** Die Entscheidungen dieses Protokolls stehen jetzt im eigenständigen Projekt `_tools/_webapp-style` (`SKILL.md` mit den Regeln, `base.css`, `reference.html`). Die `base.css` dieser App ist eine Kopie davon. Dieses Protokoll bleibt als Historie stehen. `_ref/stilvorgabe-webapps.md` ist die ursprüngliche Vorgabe des Testfalls.
+
 ## Fehler in der Vorgabe
 
 - **Dark Mode, Kontrast:** Weißer Text auf `--accent` `#8FA4E6` (Button, Textauswahl) hat etwa 2,4:1. Umgesetzt: Token `--on-accent` (`#FFF` hell, `#1A1A1A` dunkel). Bitte in die Vorgabe übernehmen.

@@ -25,8 +25,8 @@
   const q15 = (m) => (m <= 0 ? 0 : Math.max(15, Math.round(m / 15) * 15));
 
   /*
-   * Grobe Abschnitte: prep (Teigzubereitung), stock (Stockgare Raumtemperatur), fridge,
-   * stueck (Ballen und Stückgare), dazu Start und Ofen.
+   * Grobe Abschnitte: prep (Teigzubereitung), stock (Stockgare Raumtemperatur), balls (Kugeln
+   * vor dem Kühlschrank), fridge, stueck (Ballen und Stückgare), dazu Start und Ofen.
    *
    * Start und Ofenzeit sind vorgegeben. Die Zeit dazwischen wird auf die Abschnitte verteilt:
    * feste Arbeiten (Teigzubereitung) bleiben, die Gare-Abschnitte (Stockgare, Kühlschrank,
@@ -54,7 +54,8 @@
         case 'room': g = seenShape ? 'stueck' : 'stock'; break;
         case 'fridge': g = 'fridge'; break;
         case 'shape': {
-          g = nextKind(i) === 'room' ? 'stueck' : last || 'stock';
+          const next = nextKind(i);
+          g = next === 'room' ? 'stueck' : next === 'fridge' ? 'balls' : last || 'stock';
           shapeGroup = g;
           seenShape = true;
           break;
@@ -83,6 +84,7 @@
       r.title = {
         prep: preps.length > 1 && r === preps[0] ? 'Teigzubereitung (Vorteig)' : 'Teigzubereitung',
         stock: 'Stockgare Raumtemperatur',
+        balls: 'In Kugeln teilen',
         fridge: 'Kühlschrank',
         stueck: shapeGroup === 'stueck' ? 'Ballen und Stückgare' : 'Stückgare',
       }[r.group];

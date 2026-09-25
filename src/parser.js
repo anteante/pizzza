@@ -96,6 +96,22 @@
     return ing;
   }
 
+  // „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“
+  // → [{ hours: 8, dry: 2, fresh: 6 }, { hours: 10, dry: 1.5, fresh: 4.5 }]. Ohne Hefeart gilt die Reihenfolge davor.
+  function yeastByHours(notes) {
+    const re = new RegExp(`(${NUM})\\s*g\\s*(trocken|frisch)?\\w*\\s+oder\\s+(${NUM})\\s*g\\s*(?:\\w*hefe\\s+)?für\\s+(${NUM})\\s*(?:h|stunden?)\\b`, 'gi');
+    const out = [];
+    for (const n of notes.filter((x) => /hefe/i.test(x))) {
+      let firstIsDry = false, m;
+      while ((m = re.exec(n))) {
+        if (m[2]) firstIsDry = /trocken/i.test(m[2]);
+        const a = toNum(m[1]), b = toNum(m[3]);
+        out.push({ hours: toNum(m[4]), dry: firstIsDry ? a : b, fresh: firstIsDry ? b : a });
+      }
+    }
+    return out.length ? out.sort((x, y) => x.hours - y.hours) : null;
+  }
+
   /* ---------- Schritte und Dauern ---------- */
 
   const DUR_RE = new RegExp(`(${NUM})\\s*(?:${RANGE_SEP}\\s*(${NUM}))?\\s*(h|stunden?|min(?:uten?)?)\\b`, 'i');
@@ -208,6 +224,18 @@
 
   /* ---------- Methoden ---------- */
 
+  // Zubereitung einer Methode: alle Schritte bis zum letzten Kneten vor der ersten Gare
+  function prepOf(texts) {
+    if (!texts) return null;
+    let last = -1;
+    for (let i = 0; i < texts.length; i++) {
+      const kinds = segmentsOf(texts[i]).map(classify);
+      if (kinds.some((k) => k === 'room' || k === 'fridge')) break;
+      if (kinds.includes('knead')) last = i;
+    }
+    return last >= 0 ? texts.slice(0, last + 1) : null;
+  }
+
   function slurpMethod(blocks) {
     const info = { steps: null, variant: null, notes: [] };
     let pendingTitle = null;
@@ -244,13 +272,28 @@
 
       const methodSubs = subs.filter((s) => s.title && /^methode/i.test(s.title));
       const sources = methodSubs.length
-        ? methodSubs.map((s) => ({ name: `${group.title} – ${s.title.replace(/^methode\s*\d+\s*[–-]\s*/i, '')}`, blocks: s.blocks }))
+        ? methodSubs.map((s) => ({ name: `${group.title} – ${s.title.replace(/^methode\s*\d+\s*[–-]\s*/i, '')}`, num: (s.title.match(/^methode\s*(\d+)/i) || [])[1], blocks: s.blocks }))
         : [{ name: group.title, blocks: group.blocks }];
 
       const groupMethods = [];
+      const rawSteps = {}; // Methodennummer → Schritte, für „wie Methode N“
       for (const src of sources) {
         const info = slurpMethod(src.blocks);
         if (!info.steps) { report.warnings.push(`Keine Schritte in „${src.name}“ gefunden`); continue; }
+        const hints = [];
+        info.steps = info.steps.flatMap((t) => {
+          // „Sind die Ballen … fertig: Kühlschrank …“ ist ein Ausweichweg, kein fester Schritt
+          if (/^(falls|wenn|sind|ist|sollte)\b[^:]*:/i.test(t)) { hints.push(t); return []; }
+          const ref = t.match(/wie\s+Methode\s+(\d+)/i);
+          if (!ref) return [t];
+          const prep = prepOf(rawSteps[ref[1]]);
+          if (!prep) { report.warnings.push(`„${ref[0]}“ in „${src.name}“: Methode ${ref[1]} nicht gefunden`); return [t]; }
+          // Der Rest nach dem Verweis („Wassertemperatur so wählen, …“) wird Hinweis
+          const after = t.slice(ref.index + ref[0].length).replace(/^\s*,\s*/, '').trim();
+          if (after) hints.push(cap(after));
+          return prep;
+        });
+        if (src.num) rawSteps[src.num] = info.steps;
         const baseSteps = makeSteps(info.steps, report);
         let variant = null;
         if (info.variant) {
@@ -264,6 +307,10 @@
         groupMethods.push({
           id: slug(src.name), name: src.name, family: group.title, ingredients, steps: baseSteps, variant,
           notes: info.notes.filter((n) => n !== 'Rest identisch'),
+          hints,
+          // Methodentext wie in der md (ohne Zutatenliste und Zwischenüberschriften), für die Anleitung
+          blocks: src.blocks.filter((b) => b.type !== 'h' && b.type !== 'hr' && !isIngredientList(b)),
+          yeastByHours: yeastByHours(info.notes),
           yield: y ? { count: toNum(y[1]), unit: y[2] } : null,
         });
       }

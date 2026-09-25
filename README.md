@@ -15,6 +15,12 @@ Alternativ im Browser über „pizzateig.md laden“ oder per Drag & Drop. Das g
 
 Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter „Quelle“ im Erkennungsprotokoll und in der Ausgabe von `sync.mjs`.
 
+## Was die App in der md zusätzlich erkennt
+
+- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan.
+- Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
+- „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“ im Text einer Methode ersetzt die Hefe aus dem Basisrezept. Die Menge wird passend zur Gärdauer im Zeitplan interpoliert.
+
 ## Abweichungen von der md
 
 `pizzateig.md` bleibt unverändert. Eigene Werte stehen in `SETTINGS` am Anfang von `src/app.js`:

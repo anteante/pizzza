@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans+Condensed:wght@300;500&display=swap">
+  <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -53,9 +54,8 @@
 
   <section id="steps" aria-labelledby="h-steps">
     <h2 id="h-steps">Anleitung</h2>
-    <p class="mono" id="steps-lead"></p>
-    <ol class="steps" id="steps-list"></ol>
-    <div id="steps-notes"></div>
+    <div id="steps-text"></div>
+    <p class="mono note"><a href="https://www.rezeppelin.de/posts/pizzateig/">Anleitung auf rezeppelin.de</a></p>
   </section>
 
   <section id="plan" aria-labelledby="h-plan">
@@ -63,11 +63,11 @@
     <div class="rows">
       <div class="row">
         <label class="mono" for="start-day">Start</label>
-        <div class="when"><select id="start-day"></select><input id="start-time" type="time" step="900" aria-label="Startzeit"></div>
+        <div><select id="start-day" class="auto"></select><input id="start-time" type="time" step="900" aria-label="Startzeit"></div>
       </div>
       <div class="row">
         <label class="mono" for="oven-day">Pizza in den Ofen</label>
-        <div class="when"><select id="oven-day"></select><input id="oven-time" type="time" step="900" aria-label="Uhrzeit Ofen"></div>
+        <div><select id="oven-day" class="auto"></select><input id="oven-time" type="time" step="900" aria-label="Uhrzeit Ofen"></div>
       </div>
       <div class="row">
         <label class="mono" for="temp">Raumtemperatur</label>
@@ -76,11 +76,7 @@
     </div>
     <p class="mono note error" id="plan-warn" role="status"></p>
     <div id="plan-list"></div>
-  </section>
-
-  <section id="notes" aria-labelledby="h-notes">
-    <h2 id="h-notes">Notizen</h2>
-    <div id="notes-list"></div>
+    <div id="plan-hints"></div>
   </section>
 
   <section id="source" aria-label="pizzateig.md">
