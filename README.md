@@ -19,6 +19,7 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 
 - „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan.
 - Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
+- Schritte mit „sollte“ und ohne Dauer („Die Teigtemperatur sollte … nicht überschreiten“) sind Vorgaben. Sie stehen ebenfalls als Hinweis unter dem Zeitplan.
 - „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“ im Text einer Methode ersetzt die Hefe aus dem Basisrezept. Die Menge wird passend zur Gärdauer im Zeitplan interpoliert.
 
 ## Abweichungen von der md

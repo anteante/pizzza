@@ -28,8 +28,9 @@ Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage e
 - Frischhefe in den 600g Wasser auflösen, Trockenhefe unter das Mehl mischen
 - Wasser und Mehl verbinden, 30 Min ruhen (Fermentolyse)
 - Salz im zurückgehaltenen Wasser auflösen
-- Kneten, bis sich das Gluten bildet, dann das Salzwasser in 2–3 Portionen einarbeiten
-- 10–15 Min kneten bis glatt
+- Kneten, das Salzwasser in 2–3 Portionen einarbeiten
+- Die Teigtemperatur sollte nach dem Kneten 23-24°C nicht überschreiten (kaltes Wasser!)
+- 10–15 Min auskneten
 - 1h Raumtemperatur abgedeckt
 - In 6 Stück teilen, Ballen schleifen
 - 18–24h Kühlschrank
@@ -39,7 +40,8 @@ Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage e
 
 8–10h, komplett bei Raumtemperatur (20–22°C). Hefemenge ggf. anpassen (2g Trockenhefe oder 6g Frischhefe für 8 Stunden, 1,5g oder 4,5g für 10 Stunden etc.)
 
-- Kneten wie Methode 1, Teig sollte nach dem Kneten nicht mehr als 25°C haben (kaltes Wasser!)
+- Kneten wie Methode 1, 
+- Die Teigtemperatur sollte nach dem Kneten 23-24°C nicht überschreiten (kaltes Wasser!)
 - 2h Stockgare bei Raumtemperatur, abgedeckt
 - In 6 Stück teilen, Ballen schleifen
 - 5–7h Stückgare bei Raumtemperatur
@@ -100,7 +102,7 @@ Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage e
 
 - Hefemenge bei kalter Gärung: 0,3-0,5% Frischhefe vom Mehl (= 3-5g Frisch oder 1-1,6g Trocken, also 0,1–0,16% Trockenhefe)
 - Je weniger Hefe, desto besser Geschmack und Verträglichkeit
-- Kaltes Wasser verhindert Überwärmung beim Kneten
+- Teigtemperatur nach dem Kneten 23–24°C, mit dem Thermometer prüfen. Kaltes Wasser gleicht die Reibungswärme der Knetmaschine aus. Bei kalter Führung eher das untere Ende, weil der Teig im Kühlschrank Stunden zum Durchkühlen braucht.
 
 *Bei kürzerer Teigführung Hefemenge anpassen: Bei 8 Stunden 6g Frischhefe oder 2g Trockenhefe*
 *Umrechnung Frisch- zu Trockenhefe: Verhältnis ca. 3:1 (3g Frisch ≈ 1g Trocken).*

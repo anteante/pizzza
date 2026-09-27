@@ -284,6 +284,8 @@
         info.steps = info.steps.flatMap((t) => {
           // „Sind die Ballen … fertig: Kühlschrank …“ ist ein Ausweichweg, kein fester Schritt
           if (/^(falls|wenn|sind|ist|sollte)\b[^:]*:/i.test(t)) { hints.push(t); return []; }
+          // „Die Teigtemperatur sollte … nicht überschreiten“ ist eine Vorgabe, keine Tätigkeit
+          if (/\bsollten?\b/i.test(t) && !findDuration(t)) { hints.push(t); return []; }
           const ref = t.match(/wie\s+Methode\s+(\d+)/i);
           if (!ref) return [t];
           const prep = prepOf(rawSteps[ref[1]]);
