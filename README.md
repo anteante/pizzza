@@ -17,7 +17,7 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 
 ## Was die App in der md zusätzlich erkennt
 
-- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan. Eine Klammer direkt nach dem Verweis wird nicht übernommen.
+- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan. Eine Klammer direkt nach dem Verweis wird nicht übernommen. In der Anleitung steht der Schritt nur als „Auskneten“.
 - Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
 - Schritte mit „sollte“ und ohne Dauer („Die Teigtemperatur sollte … nicht überschreiten“) sind Vorgaben. Sie stehen ebenfalls als Hinweis unter dem Zeitplan.
 - „68% Hydration (von Hand 66%)“ im Text einer Methode wird beim Wechsel der Methode als Hydration übernommen. Der Wert von Hand steht als Hinweis daneben.

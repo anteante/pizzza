@@ -197,7 +197,9 @@
     $('#steps-text').innerHTML = m.blocks.map((b) => {
       if (b.type === 'ul' || b.type === 'ol') {
         afterList = true;
-        return `<ol class="steps">${b.items.map((i) => `<li><span>${scaled(i, m, c)}</span></li>`).join('')}</ol>`;
+        // „Kneten wie Methode 1 (…), siehe …“ steht in der Anleitung nur als „Auskneten“, die Schritte selbst hat der Zeitplan
+        const text = (i) => (/^kneten\s+wie\s+methode\s+\d+/i.test(i) ? 'Auskneten' : i);
+        return `<ol class="steps">${b.items.map((i) => `<li><span>${scaled(text(i), m, c)}</span></li>`).join('')}</ol>`;
       }
       if (b.type !== 'p') return '';
       if (/^\*\*.+\*\*$/.test(b.text)) return `<p class="label note">${scaled(b.text, m, c)}</p>`;
