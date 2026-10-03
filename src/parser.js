@@ -112,6 +112,32 @@
     return out.length ? out.sort((x, y) => x.hours - y.hours) : null;
   }
 
+  // „68% Hydration (von Hand 66%)“ im Text einer Methode → { pct: 68, hand: 66 }
+  function hydrationOf(notes) {
+    const re = new RegExp(`(${NUM})\\s*%\\s*Hydration(?:\\s*\\(von\\s+Hand\\s+(${NUM})\\s*%\\))?`, 'i');
+    for (const n of notes) {
+      const m = n.match(re);
+      if (m) return { pct: toNum(m[1]), hand: m[2] ? toNum(m[2]) : null };
+    }
+    return null;
+  }
+
+  // „Abweichend vom Basisrezept: Caputo Nuvola Super, 68% Hydration (…), 0,5g Trockenhefe oder 1,5g Frischhefe“
+  // → Zutatenliste der Gruppe mit ersetztem Mehl und ersetzter Hefe. Die Hydration liest hydrationOf.
+  function withOverrides(ingredients, notes) {
+    const n = notes.find((x) => /^abweichend\s+vom\s+basisrezept\s*:/i.test(x));
+    if (!n) return ingredients;
+    const parts = n.replace(/^[^:]*:/, '').split(/\.\s/)[0].replace(/\.\s*$/, '').split(/,\s+(?![^(]*\))/).map((x) => x.trim());
+    let out = ingredients;
+    for (const part of parts) {
+      if (/hydration/i.test(part)) continue;
+      const ing = parseIngredient(part);
+      if (ing.kind === 'yeast') out = out.map((i) => (i.kind === 'yeast' ? { ...i, fresh: ing.fresh, dry: ing.dry, raw: part } : i));
+      else if (ing.kind === 'text' && /mehl|caputo|farina|tipo/i.test(part)) out = out.map((i) => (i.kind === 'flour' ? { ...i, label: `Mehl (${part})`, raw: part } : i));
+    }
+    return out;
+  }
+
   /* ---------- Schritte und Dauern ---------- */
 
   const DUR_RE = new RegExp(`(${NUM})\\s*(?:${RANGE_SEP}\\s*(${NUM}))?\\s*(h|stunden?|min(?:uten?)?)\\b`, 'i');
@@ -290,8 +316,9 @@
           if (!ref) return [t];
           const prep = prepOf(rawSteps[ref[1]]);
           if (!prep) { report.warnings.push(`„${ref[0]}“ in „${src.name}“: Methode ${ref[1]} nicht gefunden`); return [t]; }
-          // Der Rest nach dem Verweis („Wassertemperatur so wählen, …“) wird Hinweis
-          const after = t.slice(ref.index + ref[0].length).replace(/^\s*,\s*/, '').trim();
+          // Der Rest nach dem Komma („…, Wassertemperatur so wählen“) wird Hinweis, eine Klammer direkt nach dem Verweis nicht
+          const rest = t.slice(ref.index + ref[0].length);
+          const after = /^\s*,/.test(rest) ? rest.replace(/^\s*,\s*/, '').trim() : '';
           if (after) hints.push(cap(after));
           return prep;
         });
@@ -307,12 +334,13 @@
         const text = info.steps.join(' ');
         const y = text.match(/In\s+(\d+)\s+(Kugeln|Portionen|Stücke?|Ballen)\b/i);
         groupMethods.push({
-          id: slug(src.name), name: src.name, family: group.title, ingredients, steps: baseSteps, variant,
+          id: slug(src.name), name: src.name, family: group.title, ingredients: withOverrides(ingredients, info.notes), steps: baseSteps, variant,
           notes: info.notes.filter((n) => n !== 'Rest identisch'),
           hints,
           // Methodentext wie in der md (ohne Zutatenliste und Zwischenüberschriften), für die Anleitung
           blocks: src.blocks.filter((b) => b.type !== 'h' && b.type !== 'hr' && !isIngredientList(b)),
           yeastByHours: yeastByHours(info.notes),
+          hydration: hydrationOf(info.notes),
           yield: y ? { count: toNum(y[1]), unit: y[2] } : null,
         });
       }

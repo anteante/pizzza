@@ -21,8 +21,9 @@
     return steps.flatMap((s) => s.phases);
   }
 
-  // Auf volle Viertelstunden runden, jede echte Dauer mindestens 15 Min
-  const q15 = (m) => (m <= 0 ? 0 : Math.max(15, Math.round(m / 15) * 15));
+  // Auf halbe Stunden runden, jede echte Dauer mindestens 30 Min
+  const STEP = 30;
+  const q30 = (m) => (m <= 0 ? 0 : Math.max(STEP, Math.round(m / STEP) * STEP));
 
   /*
    * Grobe Abschnitte: prep (Teigzubereitung), stock (Stockgare Raumtemperatur), balls (Kugeln
@@ -77,8 +78,8 @@
     const preps = rows.filter((r) => r.group === 'prep');
     for (const r of rows) {
       const sum = (k) => r.phases.reduce((s, p) => s + p[k], 0);
-      r.min = q15(sum('rmin'));
-      r.max = Math.max(r.min, q15(sum('rmax')));
+      r.min = q30(sum('rmin'));
+      r.max = Math.max(r.min, q30(sum('rmax')));
       const activeMin = r.phases.filter((p) => p.active).reduce((s, p) => s + p.rdur, 0);
       r.active = activeMin * 2 >= sum('rdur') && activeMin > 0;
       r.title = {
@@ -91,10 +92,10 @@
     }
 
     // 3. Zeit zwischen Start und Ofen auf die Abschnitte verteilen
-    const startD = q15Date(start), ovenD = q15Date(oven);
+    const startD = q30Date(start), ovenD = q30Date(oven);
     const avail = Math.round((ovenD - startD) / 60000);
     // Der Kühlschrank darf kürzer sein als der Idealwert (Untergrenze der Spanne), aber höchstens um fridgeShrinkH
-    rows.forEach((r) => { r.floor = r.group === 'fridge' ? Math.max(15, r.min - fridgeShrinkH * 60) : r.min; });
+    rows.forEach((r) => { r.floor = r.group === 'fridge' ? Math.max(STEP, r.min - fridgeShrinkH * 60) : r.min; });
     const minSum = rows.reduce((s, r) => s + r.min, 0);       // Idealwerte
     const floorSum = rows.reduce((s, r) => s + r.floor, 0);   // absolutes Minimum
     const maxSum = rows.reduce((s, r) => s + r.max, 0);
@@ -104,12 +105,12 @@
       if (avail > maxSum) status = 'long';
     } else if (avail >= minSum) {
       const t = (avail - minSum) / (maxSum - minSum);
-      rows.forEach((r) => { r.dur = Math.min(r.max, Math.max(r.min, Math.round((r.min + t * (r.max - r.min)) / 15) * 15)); });
+      rows.forEach((r) => { r.dur = Math.min(r.max, Math.max(r.min, Math.round((r.min + t * (r.max - r.min)) / STEP) * STEP)); });
       // Rundungsrest auf die Abschnitte mit dem größten Spielraum verteilen
       let diff = avail - rows.reduce((s, r) => s + r.dur, 0);
       const byFlex = [...rows].sort((x, y) => (y.max - y.min) - (x.max - x.min));
       for (let guard = 0; diff !== 0 && guard < 200; guard++) {
-        const stepMin = diff > 0 ? 15 : -15;
+        const stepMin = diff > 0 ? STEP : -STEP;
         const r = byFlex.find((x) => x.dur + stepMin >= x.min && x.dur + stepMin <= x.max);
         if (!r) break;
         r.dur += stepMin;
@@ -165,7 +166,7 @@
     const first = { milestone: true, title: 'Start', start: actualStart, dur: 0, details: [`Gesamtdauer ${fmtDur(total)}`] };
     const details = [];
     const preheat = items.find((p) => p.parallel);
-    if (preheat) details.push(`Ofen ab ${fmtTime(new Date(ovenD.getTime() - q15(preheat.rdur) * 60000))} vorheizen`);
+    if (preheat) details.push(`Ofen ab ${fmtTime(new Date(ovenD.getTime() - q30(preheat.rdur) * 60000))} vorheizen`);
     const bake = items.filter((p) => p.post && p.rdur > 0).map((p) => `${p.label} ${fmtRange(Math.round(p.rmin), Math.round(p.rmax))}`);
     if (bake.length) details.push(bake.join(', '));
     const last2 = { milestone: true, title: 'Pizza in den Ofen', start: ovenD, dur: 0, details };
@@ -186,10 +187,10 @@
     };
   }
 
-  function q15Date(d) {
+  function q30Date(d) {
     const x = new Date(d);
     x.setSeconds(0, 0);
-    x.setMinutes(Math.round(x.getMinutes() / 15) * 15);
+    x.setMinutes(Math.round(x.getMinutes() / STEP) * STEP);
     return x;
   }
 
@@ -224,5 +225,5 @@
     return `${fmtDur(min)} – ${fmtDur(max)}`;
   }
 
-  return { TEMPS, build, q15Date, fmtTime, fmtDur, fmtLong, fmtRange };
+  return { TEMPS, build, q30Date, fmtTime, fmtDur, fmtLong, fmtRange };
 });

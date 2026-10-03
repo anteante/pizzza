@@ -58,8 +58,6 @@ Abweichend vom Basisrezept: Caputo Nuvola Super, 68% Hydration (von Hand 66%), 0
 - 24h Kühlschrank als Ballen
 - 3–4h vor dem Backen Raumtemperatur
 
-Kritisch: Kühlschranktemperatur. Bei 4°C planmäßig, bei 7°C (Türfach, häufiges Öffnen) am zweiten Tag übergart. Temperatur am Stellplatz einmal messen.
-
 ### Methode 4 – Biga
 
 1. Biga: 1000g Mehl + Hefe + 500 g Wasser grob vermischen

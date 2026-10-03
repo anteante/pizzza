@@ -7,7 +7,7 @@
   // Abweichungen von pizzateig.md (die md bleibt unverändert, siehe README)
   const SETTINGS = {
     fridgeShrinkH: 3, // Kühlschrank darf bei knapper Zeit bis zu 3 h kürzer sein als der Idealwert aus der md
-    hydrationDefault: { neapolitanisch: 63 }, // Präfix der Methoden-ID (alle Neapolitanisch-Methoden), md: 65 %
+    hydrationDefault: { neapolitanisch: 63 }, // Präfix der Methoden-ID (alle Neapolitanisch-Methoden), md: 65 %; nennt eine Methode eigene Hydration, gilt diese
   };
 
   const store = {
@@ -54,6 +54,7 @@
   const baseFlour = (m) => (ing(m, 'flour') || { amount: 1000 }).amount;
 
   function hydDefault(m) {
+    if (m.hydration) return m.hydration.pct; // eigene Angabe der Methode geht vor
     const key = Object.keys(SETTINGS.hydrationDefault).find((k) => m.id.startsWith(k + '-'));
     if (key) return SETTINGS.hydrationDefault[key];
     const w = ing(m, 'water');
@@ -124,6 +125,7 @@
     setVal($('#hydration'), h == null ? '' : Math.round(h * 10) / 10);
     $('#hydration').disabled = !w;
     const hints = [];
+    if (m.hydration && m.hydration.hand != null) hints.push(`von Hand ${de(m.hydration.hand)} %`);
     if (w && w.min) hints.push(`laut Rezept ${de((w.min / baseFlour(m)) * 100)}–${de((w.max / baseFlour(m)) * 100)} %`);
     $('#hydration-hint').textContent = hints.join(' ');
 
@@ -221,12 +223,22 @@
     return d;
   }
 
-  // Standard: Start heute 18:00, Ofen morgen 18:00
+  // Standard: Start zur nächsten vollen Stunde, Ofen nach der üblichen Dauer der Methode
   function initTimes() {
-    state.startDay = 0;
-    state.startTime = '18:00';
-    state.ovenDay = 1;
-    state.ovenTime = '18:00';
+    const d = new Date();
+    if (d.getMinutes() || d.getSeconds() || d.getMilliseconds()) d.setHours(d.getHours() + 1, 0, 0, 0);
+    state.startDay = dayOffset(d);
+    state.startTime = Pl.fmtTime(d);
+    fitOven();
+  }
+
+  // Ofen = Start + Mitte zwischen Ideal- und Höchstdauer der Methode, auf volle Stunden gerundet
+  function fitOven() {
+    const start = resolve(state.startDay, state.startTime);
+    const p = Pl.build(activeSteps(method()), { start, oven: start, factor: factor(), fridgeShrinkH: SETTINGS.fridgeShrinkH });
+    const oven = new Date(start.getTime() + Math.round((p.idealMin + p.maxMin) / 2 / 60) * 3600000);
+    state.ovenDay = Math.min(DAYS - 1, dayOffset(oven));
+    state.ovenTime = Pl.fmtTime(oven);
   }
 
   function fillDays() {
@@ -299,6 +311,7 @@
 
   function changeMethod(id) {
     state.methodId = id; state.hyd = null; state.bass = null;
+    if (state.startTime != null) fitOven();
     update();
   }
 

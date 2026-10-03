@@ -17,9 +17,11 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 
 ## Was die App in der md zusätzlich erkennt
 
-- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan.
+- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan. Eine Klammer direkt nach dem Verweis wird nicht übernommen.
 - Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
 - Schritte mit „sollte“ und ohne Dauer („Die Teigtemperatur sollte … nicht überschreiten“) sind Vorgaben. Sie stehen ebenfalls als Hinweis unter dem Zeitplan.
+- „68% Hydration (von Hand 66%)“ im Text einer Methode wird beim Wechsel der Methode als Hydration übernommen. Der Wert von Hand steht als Hinweis daneben.
+- „Abweichend vom Basisrezept: Caputo Nuvola Super, …, 0,5g Trockenhefe oder 1,5g Frischhefe“ ersetzt Mehlsorte und Hefe des Basisrezepts für diese Methode.
 - „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“ im Text einer Methode ersetzt die Hefe aus dem Basisrezept. Die Menge wird passend zur Gärdauer im Zeitplan interpoliert.
 
 ## Abweichungen von der md
@@ -27,7 +29,7 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 `pizzateig.md` bleibt unverändert. Eigene Werte stehen in `SETTINGS` am Anfang von `src/app.js`:
 
 - Kühlschrank darf bei knapper Zeit bis zu 3 h kürzer sein als der Idealwert aus der md (`fridgeShrinkH`).
-- Standard-Hydration 63 % für alle Neapolitanisch-Methoden (md: 65 %). Der Schlüssel ist der Anfang der Methoden-ID, also auch nach Umbenennen einzelner Methoden gültig, solange die Überschrift „Neapolitanisch“ heißt.
+- Standard-Hydration 63 % für alle Neapolitanisch-Methoden (md: 65 %). Nennt eine Methode eine eigene Hydration, gilt diese. Der Schlüssel ist der Anfang der Methoden-ID, also auch nach Umbenennen einzelner Methoden gültig, solange die Überschrift „Neapolitanisch“ heißt.
 
 ## Aufbau
 
