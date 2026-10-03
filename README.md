@@ -21,7 +21,7 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 - Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
 - Schritte mit „sollte“ und ohne Dauer („Die Teigtemperatur sollte … nicht überschreiten“) sind Vorgaben. Sie stehen ebenfalls als Hinweis unter dem Zeitplan.
 - „68% Hydration (von Hand 66%)“ im Text einer Methode wird beim Wechsel der Methode als Hydration übernommen. Der Wert von Hand steht als Hinweis daneben.
-- „Abweichend vom Basisrezept: Caputo Nuvola Super, …, 0,5g Trockenhefe oder 1,5g Frischhefe“ ersetzt Mehlsorte und Hefe des Basisrezepts für diese Methode.
+- „Abweichend vom Basisrezept: Caputo Nuvola Super, …, 0,5g Trockenhefe oder 1,5g Frischhefe“ ersetzt Mehlsorte und Hefe des Basisrezepts für diese Methode. Dieser Absatz und der mit der Hefe je Gärdauer erscheinen nicht in der Anleitung, weil der Rechner sie schon auswertet.
 - „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“ im Text einer Methode ersetzt die Hefe aus dem Basisrezept. Die Menge wird passend zur Gärdauer im Zeitplan interpoliert.
 
 ## Abweichungen von der md

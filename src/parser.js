@@ -341,6 +341,8 @@
           blocks: src.blocks.filter((b) => b.type !== 'h' && b.type !== 'hr' && !isIngredientList(b)),
           yeastByHours: yeastByHours(info.notes),
           hydration: hydrationOf(info.notes),
+          // Absätze, die der Rechner schon auswertet (Abweichungen, Hefe je Gärdauer): in der Anleitung nicht nötig
+          evaluated: info.notes.filter((n) => /^abweichend\s+vom\s+basisrezept\s*:/i.test(n) || yeastByHours([n])),
           yield: y ? { count: toNum(y[1]), unit: y[2] } : null,
         });
       }

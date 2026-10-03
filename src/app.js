@@ -201,7 +201,7 @@
         const text = (i) => (/^kneten\s+wie\s+methode\s+\d+/i.test(i) ? 'Auskneten' : i);
         return `<ol class="steps">${b.items.map((i) => `<li><span>${scaled(text(i), m, c)}</span></li>`).join('')}</ol>`;
       }
-      if (b.type !== 'p') return '';
+      if (b.type !== 'p' || m.evaluated.includes(b.text.replace(/^\*(.+)\*$/, '$1'))) return '';
       if (/^\*\*.+\*\*$/.test(b.text)) return `<p class="label note">${scaled(b.text, m, c)}</p>`;
       return afterList ? `<p class="mono note">${scaled(b.text, m, c)}</p>` : `<p>${scaled(b.text, m, c)}</p>`;
     }).join('');
