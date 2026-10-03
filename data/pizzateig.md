@@ -47,7 +47,20 @@ Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage e
 - 5–7h Stückgare bei Raumtemperatur
 - Sind die Ballen vor dem Backen fertig: Kühlschrank, 30–45 Min vor dem Backen wieder raus
 
-### Methode 3 – Biga
+### Methode 3 – 48h
+
+Abweichend vom Basisrezept: Caputo Nuvola Super, 68% Hydration (von Hand 66%), 0,5g Trockenhefe oder 1,5g Frischhefe. Pizzeria ist für 48h an der Grenze, die Ballen werden am Ende weich.
+
+- Kneten wie Methode 1 (600g Wasser direkt, Rest per Bassinage), siehe „Kneten: Hand oder Maschine“
+- 1h Raumtemperatur, abgedeckt
+- 24h Kühlschrank im Block, geölte, luftdichte Dose
+- Kalt in 6 Stücke teilen, straff schleifen
+- 24h Kühlschrank als Ballen
+- 3–4h vor dem Backen Raumtemperatur
+
+Kritisch: Kühlschranktemperatur. Bei 4°C planmäßig, bei 7°C (Türfach, häufiges Öffnen) am zweiten Tag übergart. Temperatur am Stellplatz einmal messen.
+
+### Methode 4 – Biga
 
 1. Biga: 1000g Mehl + Hefe + 500 g Wasser grob vermischen
 2. Biga in einem luftdichten Gefäß über Nacht im Kühlschrank fermentieren (12-18h)
@@ -118,6 +131,15 @@ Mit 600g Wasser starten. Alles darüber wird zurückgehalten und per Bassinage e
 - 20g/kg (2%) ist bewusste Wahl und funktioniert einwandfrei — milder, aber strukturell unproblematisch
 - Neapolitanische Norm liegt bei 25–30g (2,5–3%), ist aber Konvention, kein Muss
 - Unter 15g/kg (1,5%) wird der Teig spürbar schlaff und klebrig
+
+## Kneten: Hand oder Maschine
+
+Gluten entsteht entweder durch Kneten oder durch Zeit. Bei kalter Führung übernimmt die Zeit einen großen Teil, langes Kneten von Hand ist unnötig und erwärmt den Teig.
+
+- Maschine: 10–15 Min kneten, Wasser ca. 10–12°C
+- Von Hand: nach der Fermentolyse ca. 5 Min kneten, bis der Teig verbunden und halbwegs glatt ist, Salzwasser dabei einarbeiten. In der Stunde bei Raumtemperatur 2–3× dehnen und falten, alle 20 Min. Wasser ca. 17–18°C
+
+Werte gelten für ca. 21°C Raum- und Mehltemperatur. Liegt die Teigtemperatur nach dem Kneten 2°C über dem Ziel, das Wasser beim nächsten Mal 3–4°C kälter wählen.
 
 ## Timing & Temperatur
 
