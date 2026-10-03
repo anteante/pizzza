@@ -17,12 +17,20 @@ Was die App nicht eindeutig erkennt (fehlende Dauer, Stückzahl), steht unter �
 
 ## Was die App in der md zusätzlich erkennt
 
-- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. Was nach dem Komma folgt, erscheint als Hinweis unter dem Zeitplan. Eine Klammer direkt nach dem Verweis wird nicht übernommen. In der Anleitung steht der Schritt nur als „Auskneten“.
-- Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen, sind Ausweichwege. Sie bekommen keine Zeit im Zeitplan und stehen als Hinweis darunter.
-- Schritte mit „sollte“ und ohne Dauer („Die Teigtemperatur sollte … nicht überschreiten“) sind Vorgaben. Sie stehen ebenfalls als Hinweis unter dem Zeitplan.
-- „68% Hydration (von Hand 66%)“ im Text einer Methode wird beim Wechsel der Methode als Hydration übernommen. Der Wert von Hand steht als Hinweis daneben.
-- „Abweichend vom Basisrezept: Caputo Nuvola Super, …, 0,5g Trockenhefe oder 1,5g Frischhefe“ ersetzt Mehlsorte und Hefe des Basisrezepts für diese Methode. Dieser Absatz und der mit der Hefe je Gärdauer erscheinen nicht in der Anleitung, weil der Rechner sie schon auswertet.
+Die md darf ausführlich sein, der Rechner bleibt schlank: Die Anleitung zeigt nur die Schritte. Erklärende Absätze, Vorgaben und Ausweichwege stehen im Blog.
+
+- „Kneten wie Methode 1, …“: übernimmt die Schritte von Methode 1 bis zum letzten Kneten vor der ersten Gare. In der Anleitung steht der Schritt nur als „Auskneten“.
+- Schritte, die mit „Falls/Wenn/Sind/Ist/Sollte … :“ beginnen (Ausweichwege), und Schritte mit „sollte“ ohne Dauer (Vorgaben) bekommen keine Zeit im Zeitplan und erscheinen nicht in der Anleitung.
+- „Mit 600g Wasser starten“: die Zutatenliste zeigt, wie viel Wasser für die Bassinage zurückgehalten wird. Gilt auch für Methoden mit „wie Methode N“.
+- „68% Hydration (von Hand 66%)“ im Text einer Methode wird beim Wechsel der Methode als Hydration übernommen. Der Wert von Hand steht daneben.
+- „Abweichend vom Basisrezept: Caputo Nuvola Super, …, 0,5g Trockenhefe oder 1,5g Frischhefe“ ersetzt Mehlsorte und Hefe des Basisrezepts für diese Methode.
 - „Hefe erhöhen: 2g Trockenhefe oder 6g Frischhefe für 8h, 1,5g oder 4,5g für 10h“ im Text einer Methode ersetzt die Hefe aus dem Basisrezept. Die Menge wird passend zur Gärdauer im Zeitplan interpoliert.
+- Eine Dauer im Methodennamen („24h“, „48h“) ist die Gesamtdauer: Der Ofen liegt standardmäßig so lange nach dem Start, der Kühlschrank fängt den Rest in seiner Spanne auf. Ohne Dauer im Namen gilt die Mitte zwischen Ideal- und Höchstdauer.
+
+## Zeitplan
+
+- Start standardmäßig zur nächsten vollen Stunde.
+- Zeiten im 24-h-Format, auf halbe Stunden gerundet. Tage relativ („Morgen“, „In 3 Tagen“).
 
 ## Abweichungen von der md
 

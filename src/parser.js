@@ -303,10 +303,12 @@
 
       const groupMethods = [];
       const rawSteps = {}; // Methodennummer → Schritte, für „wie Methode N“
+      const startWater = {}; // Methodennummer → Startwasser für die Bassinage
       for (const src of sources) {
         const info = slurpMethod(src.blocks);
         if (!info.steps) { report.warnings.push(`Keine Schritte in „${src.name}“ gefunden`); continue; }
         const hints = [];
+        let refNum = null;
         info.steps = info.steps.flatMap((t) => {
           // „Sind die Ballen … fertig: Kühlschrank …“ ist ein Ausweichweg, kein fester Schritt
           if (/^(falls|wenn|sind|ist|sollte)\b[^:]*:/i.test(t)) { hints.push(t); return []; }
@@ -314,6 +316,7 @@
           if (/\bsollten?\b/i.test(t) && !findDuration(t)) { hints.push(t); return []; }
           const ref = t.match(/wie\s+Methode\s+(\d+)/i);
           if (!ref) return [t];
+          refNum = ref[1];
           const prep = prepOf(rawSteps[ref[1]]);
           if (!prep) { report.warnings.push(`„${ref[0]}“ in „${src.name}“: Methode ${ref[1]} nicht gefunden`); return [t]; }
           // Der Rest nach dem Komma („…, Wassertemperatur so wählen“) wird Hinweis, eine Klammer direkt nach dem Verweis nicht
@@ -323,6 +326,10 @@
           return prep;
         });
         if (src.num) rawSteps[src.num] = info.steps;
+        // „Mit 600g Wasser starten“: der Rest der Wassermenge wird per Bassinage eingearbeitet
+        const sw = info.notes.map((n) => n.match(new RegExp(`(${NUM})\\s*g\\s+Wasser\\s+starten`, 'i'))).find(Boolean);
+        const water0 = sw ? toNum(sw[1]) : refNum ? startWater[refNum] || null : null;
+        if (src.num && water0) startWater[src.num] = water0;
         const baseSteps = makeSteps(info.steps, report);
         let variant = null;
         if (info.variant) {
@@ -341,8 +348,7 @@
           blocks: src.blocks.filter((b) => b.type !== 'h' && b.type !== 'hr' && !isIngredientList(b)),
           yeastByHours: yeastByHours(info.notes),
           hydration: hydrationOf(info.notes),
-          // Absätze, die der Rechner schon auswertet (Abweichungen, Hefe je Gärdauer): in der Anleitung nicht nötig
-          evaluated: info.notes.filter((n) => /^abweichend\s+vom\s+basisrezept\s*:/i.test(n) || yeastByHours([n])),
+          startWater: water0,
           yield: y ? { count: toNum(y[1]), unit: y[2] } : null,
         });
       }

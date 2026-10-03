@@ -49,7 +49,6 @@
   <section id="ingredients" aria-labelledby="h-ing">
     <h2 id="h-ing">Zutaten</h2>
     <div class="rows" id="ing-rows"></div>
-    <p class="mono note" id="ing-note"></p>
   </section>
 
   <section id="steps" aria-labelledby="h-steps">
@@ -63,20 +62,19 @@
     <div class="rows">
       <div class="row">
         <label class="mono" for="start-day">Start</label>
-        <div><select id="start-day" class="auto"></select><input id="start-time" type="time" step="1800" aria-label="Startzeit"></div>
+        <div><select id="start-day" class="auto"></select><select id="start-time" class="auto" aria-label="Startzeit"></select></div>
       </div>
       <div class="row">
         <label class="mono" for="oven-day">Pizza in den Ofen</label>
-        <div><select id="oven-day" class="auto"></select><input id="oven-time" type="time" step="1800" aria-label="Uhrzeit Ofen"></div>
+        <div><select id="oven-day" class="auto"></select><select id="oven-time" class="auto" aria-label="Uhrzeit Ofen"></select></div>
       </div>
       <div class="row">
         <label class="mono" for="temp">Raumtemperatur</label>
-        <div><select id="temp"></select> <span class="muted" id="temp-hint"></span></div>
+        <div><select id="temp"></select></div>
       </div>
     </div>
     <p class="mono note error" id="plan-warn" role="status"></p>
     <div id="plan-list"></div>
-    <div id="plan-hints"></div>
   </section>
 
   <section id="source" aria-label="pizzateig.md">

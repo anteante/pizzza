@@ -84,7 +84,11 @@
     const rows = m.ingredients.map((i) => {
       let amount, label = i.label;
       if (i.kind === 'flour') { amount = state.flour; const par = (i.label.match(/\(([^)]*)\)/) || [])[1]; label = par ? `Mehl (${par})` : 'Mehl'; }
-      else if (i.kind === 'water') amount = (state.flour * h) / 100;
+      else if (i.kind === 'water') {
+        amount = (state.flour * h) / 100;
+        const rest = m.startWater ? amount - m.startWater * f : 0;
+        if (rest > 0) label = `${i.label}, davon ${grams(rest)} g zurückhalten`;
+      }
       else if (i.kind === 'yeast') { const y = m.yeastByHours ? yeastFor(m) : i; amount = (state.yeast === 'dry' ? y.dry : y.fresh) * f; label = state.yeast === 'dry' ? 'Trockenhefe' : 'Frischhefe'; }
       else amount = i.amount * f;
       return { kind: i.kind, label, amount, ing: i, perUnit: i.perUnit, approx: i.approx };
@@ -148,72 +152,46 @@
       const pct = r.kind === 'flour' || r.perUnit ? '' : `${de((r.amount / state.flour) * 100, r.kind === 'yeast' ? 2 : 1)} %`;
       return `<div class="item item--3"><span class="mono">${r.approx ? 'ca. ' : ''}${grams(r.amount)} g</span><span>${esc(r.label)}</span><span class="mono muted">${pct}</span></div>`;
     }).join('') + `<div class="item item--3"><span class="mono">${de(c.dough)} g</span><span class="muted">Teig gesamt</span><span></span></div>`;
-    const y = c.rows.find((r) => r.kind === 'yeast');
-    const notes = [];
-    if (y && m.yeastByHours) {
-      const key = state.yeast === 'dry' ? 'dry' : 'fresh';
-      notes.push(`Hefe passend zu ${de(yeastFor(m).hours, 1)} h Gare laut Zeitplan. Rezept: ${m.yeastByHours.map((o) => `${de(o[key] * c.f, 1)} g bei ${de(o.hours)} h`).join(', ')}.`);
-    }
-    $('#ing-note').textContent = notes.join(' ');
   }
 
   /* ---------- Anleitung ---------- */
 
-  // Text der Methode wie in der md: Einleitung als Fließtext, Schritte nummeriert, Zusätze nach der Liste in Mono.
+  // Schritte der Methode wie in der md, nummeriert.
   // Die md ist für das Basisrezept geschrieben (meist 1000 g Mehl): Grammangaben und Stückzahl werden
   // auf die aktuelle Mehlmenge umgerechnet. Im Schreibstil der md („600g“) und ohne Mono: Mono hat nur die
   // kleine Größe und wirkt mitten im Fließtext zu klein.
   const plain = (s) => esc(s.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1'));
   const NUM = '\\d+(?:[.,]\\d+)?';
   const GRAMS = new RegExp(`(${NUM})(?:\\s*(?:-|–|bis)\\s*(${NUM}))?\\s*g\\b`, 'g');
-  const BASS = '\u0000'; // Platzhalter für die Bassinage-Ergänzung, damit sie nicht mitskaliert wird
-
-  // „Mit 600g Wasser starten … (bei 65%: 50g, bei 67%: 70g)“: Rest für die aktuelle Hydration ergänzen
-  function withBassinage(text, m, c) {
-    const start = text.match(new RegExp(`(${NUM})\\s*g\\s+Wasser\\s+starten`, 'i'));
-    const list = text.match(new RegExp(`\\(((?:bei\\s+${NUM}\\s*%:\\s*${NUM}\\s*g(?:,\\s*)?)+)(?:\\s*etc\\.?)?\\)`, 'i'));
-    if (!start || !list) return { text, extra: '' };
-    const h = hyd(m);
-    const listed = [...list[0].matchAll(new RegExp(`bei\\s+(${NUM})\\s*%`, 'gi'))].map((x) => P.toNum(x[1]));
-    if (listed.includes(h)) return { text, extra: '' };
-    const rest = Math.max(0, (state.flour * h) / 100 - P.toNum(start[1]) * c.f);
-    const at = list.index + 1 + list[1].trimEnd().length; // nach dem letzten Wert, vor „etc.“ und „)“
-    return { text: text.slice(0, at) + BASS + text.slice(at), extra: `, bei ${de(h, 1)}%: ${grams(rest)}g` };
-  }
 
   function scaled(text, m, c) {
-    const b = withBassinage(text, m, c);
     const count = Math.max(1, Math.round(c.f * m.yield.count));
-    return plain(b.text)
+    return plain(text)
       .replace(GRAMS, (all, x, y) => `${grams(P.toNum(x) * c.f)}${y ? `–${grams(P.toNum(y) * c.f)}` : ''}g`)
-      .replace(/(In\s+)(\d+)(\s+(?:Kugeln|Portionen|Stücke?|Ballen)\b)/i, (all, pre, n, post) => (+n === m.yield.count ? `${pre}${count}${post}` : all))
-      .replace(BASS, b.extra);
+      .replace(/(In\s+)(\d+)(\s+(?:Kugeln|Portionen|Stücke?|Ballen)\b)/i, (all, pre, n, post) => (+n === m.yield.count ? `${pre}${count}${post}` : all));
   }
 
+  // Der Rechner zeigt nur die Schritte. Erklärende Absätze, Vorgaben und Ausweichwege stehen im Blog.
   function renderSteps() {
     const m = method();
     const c = calc(m);
-    let afterList = false;
     $('#steps-text').innerHTML = m.blocks.map((b) => {
       if (b.type === 'ul' || b.type === 'ol') {
-        afterList = true;
-        // „Kneten wie Methode 1 (…), siehe …“ steht in der Anleitung nur als „Auskneten“, die Schritte selbst hat der Zeitplan
+        // „Kneten wie Methode 1 (…), siehe …“ steht nur als „Auskneten“, die Schritte selbst hat der Zeitplan
         const text = (i) => (/^kneten\s+wie\s+methode\s+\d+/i.test(i) ? 'Auskneten' : i);
-        return `<ol class="steps">${b.items.map((i) => `<li><span>${scaled(text(i), m, c)}</span></li>`).join('')}</ol>`;
+        return `<ol class="steps">${b.items.filter((i) => !m.hints.includes(i)).map((i) => `<li><span>${scaled(text(i), m, c)}</span></li>`).join('')}</ol>`;
       }
-      if (b.type !== 'p' || m.evaluated.includes(b.text.replace(/^\*(.+)\*$/, '$1'))) return '';
-      if (/^\*\*.+\*\*$/.test(b.text)) return `<p class="label note">${scaled(b.text, m, c)}</p>`;
-      return afterList ? `<p class="mono note">${scaled(b.text, m, c)}</p>` : `<p>${scaled(b.text, m, c)}</p>`;
+      if (b.type === 'p' && /^\*\*.+\*\*$/.test(b.text)) return `<p class="label note">${scaled(b.text, m, c)}</p>`;
+      return '';
     }).join('');
   }
 
   /* ---------- Zeitplan ---------- */
 
   const DAYS = 5; // Heute bis in vier Tagen
-  const weekday = new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'numeric' });
   const midnight = (d) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
   const dayOffset = (d) => Math.round((midnight(d) - midnight(new Date())) / 86400000);
-  const relDay = (d) => ({ '-1': 'Gestern', 0: 'Heute', 1: 'Morgen', 2: 'Übermorgen' }[dayOffset(d)] || weekday.format(d));
+  const relDay = (d) => { const n = dayOffset(d); return { '-1': 'Gestern', 0: 'Heute', 1: 'Morgen', 2: 'Übermorgen' }[n] || (n > 0 ? `In ${n} Tagen` : `Vor ${-n} Tagen`); };
   const at = (d) => `${relDay(d)}, ${Pl.fmtTime(d)}`;
   const factor = () => Pl.TEMPS.find((t) => t.id === state.temp).factor;
 
@@ -234,11 +212,19 @@
     fitOven();
   }
 
-  // Ofen = Start + Mitte zwischen Ideal- und Höchstdauer der Methode, auf volle Stunden gerundet
+  // Ofen = Start + Dauer aus dem Methodennamen („24h“, „48h“), sonst Mitte zwischen Ideal- und Höchstdauer,
+  // auf volle Stunden gerundet. Der Kühlschrank fängt den Unterschied in seiner Spanne auf.
   function fitOven() {
+    const m = method();
     const start = resolve(state.startDay, state.startTime);
-    const p = Pl.build(activeSteps(method()), { start, oven: start, factor: factor(), fridgeShrinkH: SETTINGS.fridgeShrinkH });
-    const oven = new Date(start.getTime() + Math.round((p.idealMin + p.maxMin) / 2 / 60) * 3600000);
+    const named = m.name.match(/(\d+)\s*h\b/i);
+    let hours;
+    if (named) hours = +named[1];
+    else {
+      const p = Pl.build(activeSteps(m), { start, oven: start, factor: factor(), fridgeShrinkH: SETTINGS.fridgeShrinkH });
+      hours = Math.round((p.idealMin + p.maxMin) / 2 / 60);
+    }
+    const oven = new Date(start.getTime() + hours * 3600000);
     state.ovenDay = Math.min(DAYS - 1, dayOffset(oven));
     state.ovenTime = Pl.fmtTime(oven);
   }
@@ -247,6 +233,9 @@
     const opts = Array.from({ length: DAYS }, (_, i) => `<option value="${i}">${esc(relDay(resolve(i, '12:00')))}</option>`).join('');
     $('#start-day').innerHTML = opts;
     $('#oven-day').innerHTML = opts;
+    const times = Array.from({ length: 48 }, (_, i) => { const t = `${String(Math.floor(i / 2)).padStart(2, '0')}:${i % 2 ? '30' : '00'}`; return `<option>${t}</option>`; }).join('');
+    $('#start-time').innerHTML = times;
+    $('#oven-time').innerHTML = times;
   }
 
   function planWarnings(plan) {
@@ -273,12 +262,10 @@
 
   function renderPlan() {
     const m = method();
-    $('#temp-hint').textContent = state.temp === 'normal' ? '' : `Gare bei Raumtemperatur × ${de(factor(), 2)}`;
     setVal($('#start-day'), state.startDay);
     setVal($('#start-time'), state.startTime);
     setVal($('#oven-day'), state.ovenDay);
     setVal($('#oven-time'), state.ovenTime);
-    $('#plan-hints').innerHTML = m.hints.map((h) => `<p class="mono note">${esc(h)}</p>`).join('');
 
     if (!plan) { $('#plan-list').innerHTML = ''; $('#plan-warn').textContent = 'Der Ofenzeitpunkt muss nach dem Start liegen.'; return; }
     $('#plan-warn').textContent = planWarnings(plan);
@@ -325,9 +312,9 @@
     $('#bass').addEventListener('change', (e) => { state.bass = e.target.checked; update(); });
     $('#temp').addEventListener('change', (e) => { state.temp = e.target.value; update(); });
     $('#start-day').addEventListener('change', (e) => { state.startDay = +e.target.value; update(); });
-    $('#start-time').addEventListener('input', (e) => { if (e.target.value) { state.startTime = e.target.value; update(); } });
+    $('#start-time').addEventListener('change', (e) => { state.startTime = e.target.value; update(); });
     $('#oven-day').addEventListener('change', (e) => { state.ovenDay = +e.target.value; update(); });
-    $('#oven-time').addEventListener('input', (e) => { if (e.target.value) { state.ovenTime = e.target.value; update(); } });
+    $('#oven-time').addEventListener('change', (e) => { state.ovenTime = e.target.value; update(); });
 
     $('#reset-btn').addEventListener('click', () => { store.del('pizza.md'); reload(); });
     window.addEventListener('dragover', (e) => e.preventDefault());

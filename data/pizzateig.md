@@ -53,9 +53,9 @@ Abweichend vom Basisrezept: Caputo Nuvola Super, 68% Hydration (von Hand 66%), 0
 
 - Kneten wie Methode 1 (600g Wasser direkt, Rest per Bassinage), siehe „Kneten: Hand oder Maschine“
 - 1h Raumtemperatur, abgedeckt
-- 24h Kühlschrank im Block, geölte, luftdichte Dose
+- 18–24h Kühlschrank im Block, geölte, luftdichte Dose
 - Kalt in 6 Stücke teilen, straff schleifen
-- 24h Kühlschrank als Ballen
+- 18–24h Kühlschrank als Ballen
 - 3–4h vor dem Backen Raumtemperatur
 
 ### Methode 4 – Biga
